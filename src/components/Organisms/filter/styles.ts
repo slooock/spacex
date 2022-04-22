@@ -1,8 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.main`
-  display: fex;
+  display: flex;
+
   justify-content: center;
+  margin-bottom: 50px;
 
   .booleanButtons {
     width: 150px;

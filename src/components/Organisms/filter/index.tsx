@@ -3,17 +3,31 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Button } from "@mui/material";
+import { Button, Switch } from "@mui/material";
 import { Container, Content } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import Stack from "@mui/material/Stack";
 // import { DesktopDatePicker } from "@mui/x-date-pickers";
 
-export default function Filter() {
+export interface FilterProps {
+  updateFilter: (
+    startDate: Date | null,
+    endDate: Date | null,
+    success: boolean,
+    past: boolean,
+    unsuccess: boolean,
+    upcoming: boolean
+  ) => void;
+}
+
+const Filter: React.FC<FilterProps> = ({ updateFilter }: FilterProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [past, setPast] = useState<boolean>(false);
+  const [unsuccess, setUnsuccess] = useState<boolean>(false);
+  const [upcoming, setUpcoming] = useState<boolean>(false);
+
   return (
     <Container>
       <Content>
@@ -23,6 +37,14 @@ export default function Filter() {
             value={startDate}
             onChange={(newValue) => {
               setStartDate(newValue);
+              updateFilter(
+                newValue,
+                endDate,
+                success,
+                past,
+                unsuccess,
+                upcoming
+              );
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -31,29 +53,90 @@ export default function Filter() {
             value={endDate}
             onChange={(newValue) => {
               setEndDate(newValue);
+              updateFilter(
+                startDate,
+                newValue,
+                success,
+                past,
+                unsuccess,
+                upcoming
+              );
             }}
             renderInput={(params) => <TextField {...params} />}
           />
-          <Button
-            className="booleanButtons"
-            variant={success ? "contained" : "outlined"}
-            onClick={() => {
-              setSuccess(!success);
-            }}
-          >
-            {success ? "success" : "failed"}
-          </Button>
-          <Button
-            className="booleanButtons"
-            variant={past ? "contained" : "outlined"}
-            onClick={() => {
-              setPast(!past);
-            }}
-          >
-            {past ? "Past" : "Upcoming"}
-          </Button>
+          <div>
+            <div>Success</div>
+            <Switch
+              checked={success}
+              onChange={() => {
+                setSuccess(!success);
+                updateFilter(
+                  startDate,
+                  endDate,
+                  !success,
+                  past,
+                  unsuccess,
+                  upcoming
+                );
+              }}
+            />
+          </div>
+          <div>
+            <div>Unsucceeded</div>
+            <Switch
+              checked={unsuccess}
+              onChange={(newValue) => {
+                setUnsuccess(!unsuccess);
+                updateFilter(
+                  startDate,
+                  endDate,
+                  success,
+                  past,
+                  !unsuccess,
+                  upcoming
+                );
+              }}
+            />
+          </div>
+          <div>
+            <div>Past</div>
+            <Switch
+              checked={past}
+              onChange={(newValue) => {
+                setPast(!past);
+                updateFilter(
+                  startDate,
+                  endDate,
+                  success,
+                  !past,
+                  unsuccess,
+                  upcoming
+                );
+              }}
+            />
+          </div>
+
+          <div>
+            <div>Upcoming</div>
+            <Switch
+              checked={upcoming}
+              onChange={(newValue) => {
+                setUpcoming(!upcoming);
+                updateFilter(
+                  startDate,
+                  endDate,
+                  success,
+                  past,
+                  unsuccess,
+                  !upcoming
+                );
+              }}
+            />
+          </div>
         </LocalizationProvider>
       </Content>
     </Container>
   );
-}
+};
+
+export default Filter;

@@ -4,10 +4,16 @@ import LaunchService from "../../../services/launch-service";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Launch } from "../../../domain/dto/launch-dto";
+import { PropsFilter } from "../../pages/home";
+
+interface ListLaunchers {
+  propsFilter: PropsFilter;
+}
 
 const simulateService = new LaunchService();
-
-export default function ListLaunchers() {
+const ListLaunchers: React.FC<ListLaunchers> = ({
+  propsFilter,
+}: ListLaunchers) => {
   const [listLaunches, setListLaunches] = useState<Launch[]>([]);
   const [pag, setPag] = useState<number>(0);
   const [initLoaded, setInitLoaded] = useState<boolean>(false);
@@ -18,6 +24,10 @@ export default function ListLaunchers() {
     let response = await simulateService.getLauches(limit, offset, past);
     setListLaunches([...listLaunches, ...response.data]);
   }
+
+  useEffect(() => {
+    console.log("pqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpq ", propsFilter);
+  }, [propsFilter]);
 
   // useEffect(() => {
   //   async function onInit() {
@@ -51,7 +61,7 @@ export default function ListLaunchers() {
 
   return (
     <>
-      <GroupButtons>
+      {/* <GroupButtons>
         <Button
           variant={!past ? "outlined" : "contained"}
           onClick={() => {
@@ -68,7 +78,7 @@ export default function ListLaunchers() {
         >
           Upcoming launches
         </Button>
-      </GroupButtons>
+      </GroupButtons> */}
       <List>
         {listLaunches.map((launch, index) => {
           return (
@@ -88,4 +98,6 @@ export default function ListLaunchers() {
       </List>
     </>
   );
-}
+};
+
+export default ListLaunchers;
