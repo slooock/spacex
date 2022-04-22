@@ -11,7 +11,7 @@ export default function ListLaunchers() {
   const [listLaunches, setListLaunches] = useState<Launch[]>([]);
   const [pag, setPag] = useState<number>(0);
   const [initLoaded, setInitLoaded] = useState<boolean>(false);
-  const [past, setPast] = useState<boolean>(false);
+  const [past, setPast] = useState<boolean>(true);
   const [scrollControl, setScrollControl] = useState<number>(0);
 
   async function getInfos(limit: number, offset: number) {
@@ -27,10 +27,11 @@ export default function ListLaunchers() {
   //   onInit();
   // }, []);
 
-  // useEffect(() => {
-  //   console.log("change past");
-  //   setPag((value) => 0);
-  // }, [past]);
+  useEffect(() => {
+    setListLaunches([]);
+    setScrollControl(-1);
+    // getInfos(4, listLaunches.length);
+  }, [past]);
 
   useEffect(() => {
     getInfos(4, listLaunches.length);
@@ -52,17 +53,17 @@ export default function ListLaunchers() {
     <>
       <GroupButtons>
         <Button
-          variant={past ? "outlined" : "contained"}
+          variant={!past ? "outlined" : "contained"}
           onClick={() => {
-            setPast(false);
+            setPast(true);
           }}
         >
           Past launches
         </Button>
         <Button
-          variant={!past ? "outlined" : "contained"}
+          variant={past ? "outlined" : "contained"}
           onClick={() => {
-            setPast(true);
+            setPast(false);
           }}
         >
           Upcoming launches
