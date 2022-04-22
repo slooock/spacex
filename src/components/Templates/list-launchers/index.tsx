@@ -1,5 +1,5 @@
 import Card from "../../Organisms/card";
-import { List } from "./styles";
+import { List, GroupButtons } from "./styles";
 import LaunchService from "../../../services/launch-service";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@mui/material";
@@ -11,11 +11,11 @@ export default function ListLaunchers() {
   const [listLaunches, setListLaunches] = useState<Launch[]>([]);
   const [pag, setPag] = useState<number>(0);
   const [initLoaded, setInitLoaded] = useState<boolean>(false);
+  const [past, setPast] = useState<boolean>(false);
+  const [scrollControl, setScrollControl] = useState<number>(0);
 
   async function getInfos(limit: number, offset: number) {
-    console.log("getInfos", limit, offset);
-    let response = await simulateService.getLauches(limit, offset);
-    console.log("response");
+    let response = await simulateService.getLauches(limit, offset, past);
     setListLaunches([...listLaunches, ...response.data]);
   }
 
@@ -27,18 +27,19 @@ export default function ListLaunchers() {
   //   onInit();
   // }, []);
 
+  // useEffect(() => {
+  //   console.log("change past");
+  //   setPag((value) => 0);
+  // }, [past]);
+
   useEffect(() => {
-    console.log("aaaaa");
-    console.log(4, pag);
-    getInfos(4, pag);
-  }, [pag]);
+    getInfos(4, listLaunches.length);
+  }, [scrollControl]);
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
-        console.log(pag, initLoaded);
-
-        setPag((value) => value + 4);
+        setScrollControl((value) => value + 1);
       }
     });
     intersectionObserver.observe(
@@ -48,22 +49,42 @@ export default function ListLaunchers() {
   }, []);
 
   return (
-    <List>
-      {listLaunches.map((launch, index) => {
-        return (
-          <Card
-            key={index}
-            flight_number={launch.flight_number}
-            mission_name={launch.mission_name}
-            launch_year={launch.launch_year}
-            launch_success={launch.launch_success}
-            rocket_name={launch.rocket.rocket_name}
-            image={launch.links.mission_patch}
-            details={launch.details}
-          />
-        );
-      })}
-      <span id="sentinela"></span>
-    </List>
+    <>
+      <GroupButtons>
+        <Button
+          variant={past ? "outlined" : "contained"}
+          onClick={() => {
+            setPast(false);
+          }}
+        >
+          Past launches
+        </Button>
+        <Button
+          variant={!past ? "outlined" : "contained"}
+          onClick={() => {
+            setPast(true);
+          }}
+        >
+          Upcoming launches
+        </Button>
+      </GroupButtons>
+      <List>
+        {listLaunches.map((launch, index) => {
+          return (
+            <Card
+              key={index}
+              flight_number={launch.flight_number}
+              mission_name={launch.mission_name}
+              launch_year={launch.launch_year}
+              launch_success={launch.launch_success}
+              rocket_name={launch.rocket.rocket_name}
+              image={launch.links.mission_patch}
+              details={launch.details}
+            />
+          );
+        })}
+        <span id="sentinela"></span>
+      </List>
+    </>
   );
 }
