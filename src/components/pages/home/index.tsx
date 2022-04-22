@@ -6,6 +6,7 @@ import animationData from "../../../lotties/68688-cute-astronaut-floating-with-r
 import ListLaunchers from "../../Templates/list-launchers";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
+import Filter from "../../Organisms/filter";
 
 export default function Home() {
   const defaultOptions = {
@@ -23,6 +24,7 @@ export default function Home() {
       <div>
         <Lottie options={defaultOptions} height={400} width={400} />
       </div>
+      <Filter />
       <ListLaunchers />
     </Container>
   );
