@@ -7,14 +7,14 @@ import { PropsFilter } from "../../pages/home";
 import Lottie from "react-lottie";
 import animationData from "../../../lotties/96180-rocket-facon-heavy.json";
 
-interface ListLaunchers {
+interface ListLaunchersProps {
   propsFilter: PropsFilter;
 }
 
 const simulateService = new LaunchService();
-const ListLaunchers: React.FC<ListLaunchers> = ({
+const ListLaunchers: React.FC<ListLaunchersProps> = ({
   propsFilter,
-}: ListLaunchers) => {
+}: ListLaunchersProps) => {
   const [listLaunches, setListLaunches] = useState<Launch[]>([]);
   const [scrollControl, setScrollControl] = useState<number>(0);
 
@@ -39,6 +39,7 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
 
   useEffect(() => {
     getInfos(4, listLaunches.length, "scrollControl");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollControl]);
 
   useEffect(() => {
