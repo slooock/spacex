@@ -13,8 +13,6 @@
 
 An application was developed in this project that allows the user to view Spacex missions
 
-A aplicação foi hospedada em [https://cartolafront.herokuapp.com/](https://cartolafront.herokuapp.com/)
-
 ## Execute
 
 ```
