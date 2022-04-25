@@ -28,13 +28,11 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
   };
 
   async function getInfos(limit: number, offset: number, call: string) {
-    console.log("aaaaaa");
     let response = await simulateService.getLauches(limit, offset, propsFilter);
     setListLaunches([...listLaunches, ...response.data]);
   }
 
   useEffect(() => {
-    console.log("ListLaunchers -> propsFilter", propsFilter);
     setListLaunches([]);
     setScrollControl(Math.random());
   }, [propsFilter]);

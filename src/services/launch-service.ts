@@ -10,12 +10,10 @@ const formatDate = (date: Date) => {
   const tmpDate = date.toLocaleDateString("en-US").split("/");
   const dateFmt = tmpDate[2] + "-" + tmpDate[0] + "-" + tmpDate[1];
 
-  console.log(dateFmt);
   return dateFmt;
 };
 
 const buildDate = (dateStart: Date | null, dateEnd: Date | null) => {
-  console.log("buildDate", dateStart, dateEnd);
   let dateStartFmt = "";
   let dateEndFmt = "";
 
@@ -52,7 +50,6 @@ const buildTime = (past: boolean, upcoming: boolean) => {
 };
 
 const buildURL = (limit: number, offset: number, filter: PropsFilter) => {
-  console.log("buildURL");
   let url = `launches${buildTime(
     filter.past,
     filter.upcoming
@@ -70,18 +67,7 @@ export default class LaunchService extends BaseService {
     offset: number,
     filter: PropsFilter
   ): Promise<AxiosResponse<Launch[]>> {
-    console.log("getLauches", filter);
-    //Check if there are any previous pending requests
-    if (typeof cancelToken != typeof undefined) {
-      // if (offset != 0) {
-      //   cancelToken.cancel("Operation canceled due to new request.");
-      // }
-    }
-    console.log("send");
-
     const url = buildURL(limit, offset, filter);
-
-    // console.log(filter);
 
     //Save the cancel token for the current request
     cancelToken = axios.CancelToken.source();
