@@ -1,7 +1,7 @@
 import Card from "../../Organisms/card";
 import { List, LottieContainer } from "./styles";
 import LaunchService from "../../../services/launch-service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Launch } from "../../../domain/dto/launch-dto";
 import { PropsFilter } from "../../pages/home";
 import Lottie from "react-lottie";
@@ -27,10 +27,19 @@ const ListLaunchers: React.FC<ListLaunchersProps> = ({
     },
   };
 
-  async function getInfos(limit: number, offset: number, call: string) {
-    let response = await simulateService.getLauches(limit, offset, propsFilter);
+  // async function getInfos(limit: number, offset: number, call: string) {
+  //   let response = await simulateService.getLauches(limit, offset, propsFilter);
+  //   setListLaunches([...listLaunches, ...response.data]);
+  // }
+
+  const getInfos = useCallback(async () => {
+    let response = await simulateService.getLauches(
+      4,
+      listLaunches.length,
+      propsFilter
+    );
     setListLaunches([...listLaunches, ...response.data]);
-  }
+  }, [listLaunches, propsFilter]);
 
   useEffect(() => {
     setListLaunches([]);
@@ -38,8 +47,8 @@ const ListLaunchers: React.FC<ListLaunchersProps> = ({
   }, [propsFilter]);
 
   useEffect(() => {
-    getInfos(4, listLaunches.length, "scrollControl");
-  }, [scrollControl]);
+    getInfos();
+  }, [scrollControl, getInfos]);
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
