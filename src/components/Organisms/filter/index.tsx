@@ -3,9 +3,9 @@ import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Button, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import { Container, Content } from "./styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // import Stack from "@mui/material/Stack";
 // import { DesktopDatePicker } from "@mui/x-date-pickers";
 
