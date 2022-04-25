@@ -32,106 +32,117 @@ const Filter: React.FC<FilterProps> = ({ updateFilter }: FilterProps) => {
     <Container>
       <Content>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DatePicker
-            label="Start date"
-            value={startDate}
-            onChange={(newValue) => {
-              setStartDate(newValue);
-              updateFilter(
-                newValue,
-                endDate,
-                success,
-                past,
-                unsuccess,
-                upcoming
-              );
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <DatePicker
-            label="End date"
-            value={endDate}
-            onChange={(newValue) => {
-              setEndDate(newValue);
-              updateFilter(
-                startDate,
-                newValue,
-                success,
-                past,
-                unsuccess,
-                upcoming
-              );
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <div>
-            <div>Success</div>
-            <Switch
-              checked={success}
-              onChange={() => {
-                setSuccess(!success);
-                updateFilter(
-                  startDate,
-                  endDate,
-                  !success,
-                  past,
-                  unsuccess,
-                  upcoming
-                );
-              }}
-            />
-          </div>
-          <div>
-            <div>Unsucceeded</div>
-            <Switch
-              checked={unsuccess}
-              onChange={(newValue) => {
-                setUnsuccess(!unsuccess);
-                updateFilter(
-                  startDate,
-                  endDate,
-                  success,
-                  past,
-                  !unsuccess,
-                  upcoming
-                );
-              }}
-            />
-          </div>
-          <div>
-            <div>Past</div>
-            <Switch
-              checked={past}
-              onChange={(newValue) => {
-                setPast(!past);
-                updateFilter(
-                  startDate,
-                  endDate,
-                  success,
-                  !past,
-                  unsuccess,
-                  upcoming
-                );
-              }}
-            />
-          </div>
+          <div className="flex">
+            <div className="dates">
+              <span>
+                <DatePicker
+                  className="datePicker"
+                  label="Start date"
+                  value={startDate}
+                  onChange={(newValue) => {
+                    setStartDate(newValue);
+                    updateFilter(
+                      newValue,
+                      endDate,
+                      success,
+                      past,
+                      unsuccess,
+                      upcoming
+                    );
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </span>
+              <span>
+                <DatePicker
+                  label="End date"
+                  value={endDate}
+                  onChange={(newValue) => {
+                    setEndDate(newValue);
+                    updateFilter(
+                      startDate,
+                      newValue,
+                      success,
+                      past,
+                      unsuccess,
+                      upcoming
+                    );
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </span>
+            </div>
+            <div className="switchies">
+              <div>
+                <div>Success</div>
+                <Switch
+                  checked={success}
+                  onChange={() => {
+                    setSuccess(!success);
+                    updateFilter(
+                      startDate,
+                      endDate,
+                      !success,
+                      past,
+                      unsuccess,
+                      upcoming
+                    );
+                  }}
+                />
+              </div>
+              <div>
+                <div>Unsucceeded</div>
+                <Switch
+                  checked={unsuccess}
+                  onChange={(newValue) => {
+                    setUnsuccess(!unsuccess);
+                    updateFilter(
+                      startDate,
+                      endDate,
+                      success,
+                      past,
+                      !unsuccess,
+                      upcoming
+                    );
+                  }}
+                />
+              </div>
+              <div>
+                <div>Past</div>
+                <Switch
+                  checked={past}
+                  onChange={(newValue) => {
+                    setPast(!past);
+                    updateFilter(
+                      startDate,
+                      endDate,
+                      success,
+                      !past,
+                      unsuccess,
+                      upcoming
+                    );
+                  }}
+                />
+              </div>
 
-          <div>
-            <div>Upcoming</div>
-            <Switch
-              checked={upcoming}
-              onChange={(newValue) => {
-                setUpcoming(!upcoming);
-                updateFilter(
-                  startDate,
-                  endDate,
-                  success,
-                  past,
-                  unsuccess,
-                  !upcoming
-                );
-              }}
-            />
+              <div>
+                <div>Upcoming</div>
+                <Switch
+                  checked={upcoming}
+                  onChange={(newValue) => {
+                    setUpcoming(!upcoming);
+                    updateFilter(
+                      startDate,
+                      endDate,
+                      success,
+                      past,
+                      unsuccess,
+                      !upcoming
+                    );
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </LocalizationProvider>
       </Content>
