@@ -33,6 +33,10 @@ export const Container = styled.main`
       align-items: center;
     }
   }
+  @media (max-width: 980px) {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
 `;
 
 export const Favorite = styled.div<FavoriteProps>`

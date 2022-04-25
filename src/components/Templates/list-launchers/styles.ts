@@ -5,6 +5,10 @@ export const List = styled.main`
   grid-template-columns: 30rem 30rem;
   justify-content: center;
   grid-gap: 15px;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 30rem;
+  }
 `;
 
 export const GroupButtons = styled.div`

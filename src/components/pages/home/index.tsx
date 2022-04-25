@@ -4,8 +4,7 @@ import { Container } from "./styles";
 import Lottie from "react-lottie";
 import animationData from "../../../lotties/68688-cute-astronaut-floating-with-rocket-on-space-cartoon.json";
 import ListLaunchers from "../../Templates/list-launchers";
-import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { useState } from "react";
 import Filter from "../../Organisms/filter";
 
 export interface PropsFilter {
@@ -47,8 +46,6 @@ const Home: React.FC<HomeProps> = () => {
       unsuccess,
       upcoming,
     };
-
-    console.log("HOME -> updateFilter", prepareObj);
 
     setProps(prepareObj);
   };
