@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 
@@ -26,11 +26,72 @@ const Card: React.FC<CardProps> = (props) => {
   } = props;
   const [favorite, setFavorite] = useState<boolean>(false);
 
+  const setLocalStorage = (flight_number: string) => {
+    let storageFavorites = localStorage.getItem("@spacex:listFavorites");
+
+    if (storageFavorites !== null && storageFavorites.length !== 0) {
+      storageFavorites = storageFavorites + "," + flight_number;
+    } else {
+      storageFavorites = flight_number;
+    }
+    localStorage.setItem("@spacex:listFavorites", storageFavorites);
+  };
+
+  const removeLocalStorage = (flight_number: string) => {
+    let storageFavorites = localStorage.getItem("@spacex:listFavorites");
+
+    if (storageFavorites != null) {
+      storageFavorites = storageFavorites.replaceAll(flight_number, "");
+      storageFavorites = storageFavorites.replaceAll(",,", ",");
+
+      if (storageFavorites[storageFavorites.length - 1] === ",") {
+        storageFavorites = storageFavorites.substring(
+          0,
+          storageFavorites.length - 1
+        );
+      }
+
+      if (storageFavorites[0] === ",") {
+        storageFavorites = storageFavorites.substring(
+          1,
+          storageFavorites.length
+        );
+      }
+
+      localStorage.setItem(
+        "@spacex:listFavorites",
+        storageFavorites.toString()
+      );
+    }
+  };
+
+  const handleFavorite = (favorite: boolean) => {
+    if (!favorite) {
+      setLocalStorage(String(flight_number));
+    } else {
+      removeLocalStorage(String(flight_number));
+    }
+
+    setFavorite(!favorite);
+  };
+
+  useEffect(() => {
+    const storage = localStorage.getItem("@spacex:listFavorites");
+    let listStorage = storage?.split(",");
+
+    if (
+      storage !== null &&
+      listStorage?.indexOf(String(flight_number)) !== -1
+    ) {
+      setFavorite(true);
+    }
+  }, [flight_number]);
+
   return (
     <Container>
       <div className="content">
         <div className="align">
-          <img src={image} />
+          <img src={image} alt="logo" />
         </div>
         <Content>
           <h1>
@@ -45,7 +106,7 @@ const Card: React.FC<CardProps> = (props) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              setFavorite(!favorite);
+              handleFavorite(favorite);
             }}
           >
             <FaStar />

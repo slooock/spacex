@@ -5,6 +5,10 @@ export const List = styled.main`
   grid-template-columns: 30rem 30rem;
   justify-content: center;
   grid-gap: 15px;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 30rem;
+  }
 `;
 
 export const GroupButtons = styled.div`
@@ -14,5 +18,20 @@ export const GroupButtons = styled.div`
 
   button + button {
     margin-left: 20px;
+  }
+`;
+
+export const LottieContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  span {
+    margin-top: -15px;
+  }
+  div {
+    height: 100px !important;
+    width: 100px !important;
   }
 `;
