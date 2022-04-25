@@ -79,7 +79,10 @@ const Card: React.FC<CardProps> = (props) => {
     const storage = localStorage.getItem("@spacex:listFavorites");
     let listStorage = storage?.split(",");
 
-    if (listStorage?.indexOf(String(flight_number)) !== -1) {
+    if (
+      storage !== null &&
+      listStorage?.indexOf(String(flight_number)) !== -1
+    ) {
       setFavorite(true);
     }
   }, [flight_number]);
