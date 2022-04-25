@@ -1,5 +1,3 @@
-import { Button } from "@mui/material";
-import React from "react";
 import { Container } from "./styles";
 
 export default function Header() {
