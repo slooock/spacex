@@ -1,8 +1,7 @@
 import Card from "../../Organisms/card";
-import { List, GroupButtons, LottieContainer } from "./styles";
+import { List, LottieContainer } from "./styles";
 import LaunchService from "../../../services/launch-service";
-import { useCallback, useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Launch } from "../../../domain/dto/launch-dto";
 import { PropsFilter } from "../../pages/home";
 import Lottie from "react-lottie";
@@ -34,14 +33,6 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
     setListLaunches([...listLaunches, ...response.data]);
   }
 
-  // useEffect(() => {
-  //   async function onInit() {
-  //     await getInfos(4, 0);
-  //   }
-
-  //   onInit();
-  // }, []);
-
   useEffect(() => {
     console.log("ListLaunchers -> propsFilter", propsFilter);
     setListLaunches([]);
@@ -66,24 +57,6 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
 
   return (
     <>
-      {/* <GroupButtons>
-        <Button
-          variant={!past ? "outlined" : "contained"}
-          onClick={() => {
-            setPast(true);
-          }}
-        >
-          Past launches
-        </Button>
-        <Button
-          variant={past ? "outlined" : "contained"}
-          onClick={() => {
-            setPast(false);
-          }}
-        >
-          Upcoming launches
-        </Button>
-      </GroupButtons> */}
       <List>
         {listLaunches.map((launch, index) => {
           return (

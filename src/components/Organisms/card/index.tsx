@@ -78,17 +78,17 @@ const Card: React.FC<CardProps> = (props) => {
   useEffect(() => {
     const storage = localStorage.getItem("@spacex:listFavorites");
     let listStorage = storage?.split(",");
-    console.log(listStorage?.indexOf(String(flight_number)), listStorage);
+
     if (listStorage?.indexOf(String(flight_number)) !== -1) {
       setFavorite(true);
     }
-  }, []);
+  }, [flight_number]);
 
   return (
     <Container>
       <div className="content">
         <div className="align">
-          <img src={image} />
+          <img src={image} alt="logo" />
         </div>
         <Content>
           <h1>
