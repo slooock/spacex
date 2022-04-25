@@ -17,13 +17,13 @@ const buildDate = (dateStart: Date | null, dateEnd: Date | null) => {
   let dateStartFmt = "";
   let dateEndFmt = "";
 
-  if (dateStart === null || dateStart == undefined) {
+  if (dateStart === null || dateStart === undefined) {
     dateStartFmt = "1800-1-1";
   } else {
     dateStartFmt = formatDate(dateStart as Date);
   }
 
-  if (dateEnd === null || dateEnd == undefined) {
+  if (dateEnd === null || dateEnd === undefined) {
     dateEndFmt = "2800-12-31";
   } else {
     dateEndFmt = formatDate(dateEnd as Date);
