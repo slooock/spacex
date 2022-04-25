@@ -16,3 +16,18 @@ export const GroupButtons = styled.div`
     margin-left: 20px;
   }
 `;
+
+export const LottieContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  span {
+    margin-top: -15px;
+  }
+  div {
+    height: 100px !important;
+    width: 100px !important;
+  }
+`;

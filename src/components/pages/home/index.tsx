@@ -48,6 +48,8 @@ const Home: React.FC<HomeProps> = () => {
       upcoming,
     };
 
+    console.log("HOME -> updateFilter", prepareObj);
+
     setProps(prepareObj);
   };
 

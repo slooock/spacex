@@ -1,10 +1,12 @@
 import Card from "../../Organisms/card";
-import { List, GroupButtons } from "./styles";
+import { List, GroupButtons, LottieContainer } from "./styles";
 import LaunchService from "../../../services/launch-service";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Launch } from "../../../domain/dto/launch-dto";
 import { PropsFilter } from "../../pages/home";
+import Lottie from "react-lottie";
+import animationData from "../../../lotties/96180-rocket-facon-heavy.json";
 
 interface ListLaunchers {
   propsFilter: PropsFilter;
@@ -15,19 +17,22 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
   propsFilter,
 }: ListLaunchers) => {
   const [listLaunches, setListLaunches] = useState<Launch[]>([]);
-  const [pag, setPag] = useState<number>(0);
-  const [initLoaded, setInitLoaded] = useState<boolean>(false);
-  const [past, setPast] = useState<boolean>(true);
   const [scrollControl, setScrollControl] = useState<number>(0);
 
-  async function getInfos(limit: number, offset: number) {
-    let response = await simulateService.getLauches(limit, offset, past);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  async function getInfos(limit: number, offset: number, call: string) {
+    console.log("aaaaaa");
+    let response = await simulateService.getLauches(limit, offset, propsFilter);
     setListLaunches([...listLaunches, ...response.data]);
   }
-
-  useEffect(() => {
-    console.log("pqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpqpq ", propsFilter);
-  }, [propsFilter]);
 
   // useEffect(() => {
   //   async function onInit() {
@@ -38,13 +43,13 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
   // }, []);
 
   useEffect(() => {
+    console.log("ListLaunchers -> propsFilter", propsFilter);
     setListLaunches([]);
-    setScrollControl(-1);
-    // getInfos(4, listLaunches.length);
-  }, [past]);
+    setScrollControl(Math.random());
+  }, [propsFilter]);
 
   useEffect(() => {
-    getInfos(4, listLaunches.length);
+    getInfos(4, listLaunches.length, "scrollControl");
   }, [scrollControl]);
 
   useEffect(() => {
@@ -94,8 +99,13 @@ const ListLaunchers: React.FC<ListLaunchers> = ({
             />
           );
         })}
+
         <span id="sentinela"></span>
       </List>
+      <LottieContainer>
+        <Lottie options={defaultOptions} height={400} width={400} />
+        <span>loading</span>
+      </LottieContainer>
     </>
   );
 };
